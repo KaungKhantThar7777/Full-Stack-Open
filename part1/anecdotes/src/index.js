@@ -10,12 +10,13 @@ const anecdotes = [
   "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
 ];
 
+const getRandomIndex = () => Math.floor(Math.random() * anecdotes.length);
 const App = (props) => {
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState(getRandomIndex());
   const [votes, setVotes] = useState(Array(6).fill(0));
 
   const handleNextAnecdote = () => {
-    setSelected(Math.floor(Math.random() * anecdotes.length));
+    setSelected(getRandomIndex());
   };
 
   const handleVote = () => {
@@ -23,12 +24,28 @@ const App = (props) => {
     copyVotes[selected]++;
     setVotes(copyVotes);
   };
+
+  const getHighestVotesIndex = () => {
+    let index = 0;
+    let max = votes[0];
+    votes.forEach((vote, i) => {
+      if (vote > max) {
+        index = i;
+        max = vote;
+      }
+    });
+    return index;
+  };
   return (
     <div>
+      <h2>Anecdote of the day</h2>
       <p>{props.anecdotes[selected]}</p>
       <p>has {votes[selected]} votes</p>
       <button onClick={handleVote}>vote</button>
       <button onClick={handleNextAnecdote}>next anecdote</button>
+
+      <h2>Anecdote with most votes</h2>
+      <p>{props.anecdotes[getHighestVotesIndex()]}</p>
     </div>
   );
 };
