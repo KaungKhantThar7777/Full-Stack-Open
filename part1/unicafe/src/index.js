@@ -3,29 +3,32 @@ import ReactDOM from "react-dom";
 
 const Statistic = ({ text, value }) => {
   return (
-    <p>
-      {text} {value}
-    </p>
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
   );
 };
 const Statistics = ({ good, neutral, bad, total }) => {
   return (
     <>
-      <h2>Statics</h2>
+      <h2>Statistics</h2>
       {total === 0 ? (
         <p>No Feedback Given</p>
       ) : (
-        <>
-          <Statistic text="good" value={good} />
-          <Statistic text="neutral" value={neutral} />
-          <Statistic text="bad" value={bad} />
-          <Statistic text="all" value={total} />
-          <Statistic
-            text="average"
-            value={(good * 1 + neutral * 0 + bad * -1) / total}
-          />
-          <Statistic text="positive" value={`${(good / total) * 100} %`} />
-        </>
+        <table>
+          <tbody>
+            <Statistic text="good" value={good} />
+            <Statistic text="neutral" value={neutral} />
+            <Statistic text="bad" value={bad} />
+            <Statistic text="all" value={total} />
+            <Statistic
+              text="average"
+              value={(good * 1 + neutral * 0 + bad * -1) / total}
+            />
+            <Statistic text="positive" value={`${(good / total) * 100} %`} />
+          </tbody>
+        </table>
       )}
     </>
   );
