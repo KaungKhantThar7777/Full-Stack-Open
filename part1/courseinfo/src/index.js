@@ -7,20 +7,21 @@ function Header({ course }) {
 function Content({ part1, exercises1, part2, exercises2, part3, exercises3 }) {
   return (
     <>
-      <p>
-        {part1} {exercises1}
-      </p>
-      <p>
-        {part2} {exercises2}
-      </p>
-      <p>
-        {part3} {exercises3}
-      </p>
+      <Part part={part1} exercises={exercises1} />
+      <Part part={part2} exercises={exercises2} />
+      <Part part={part3} exercises={exercises3} />
     </>
   );
 }
 function Total({ exercises1, exercises2, exercises3 }) {
   return <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>;
+}
+function Part({ part, exercises }) {
+  return (
+    <p>
+      {part} {exercises}
+    </p>
+  );
 }
 const App = () => {
   const course = "Half Stack application development";
@@ -31,12 +32,6 @@ const App = () => {
   const part3 = "State of a component";
   const exercises3 = 14;
 
-  // return (
-  //   <div>
-
-  //     <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>
-  //   </div>
-  // );
   return (
     <div>
       <Header course={course} />
