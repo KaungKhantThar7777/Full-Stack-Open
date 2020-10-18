@@ -1,6 +1,23 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
+const Statics = ({ good, neutral, bad, total }) => {
+  return (
+    <>
+      <h2>Statics</h2>
+      <p>good {good}</p>
+      <p>neutral {neutral}</p>
+      <p>bad {bad}</p>
+      <p>all {total}</p>
+
+      <p>
+        average {total === 0 ? 0 : (good * 1 + neutral * 0 + bad * -1) / total}
+      </p>
+      <p>positive {total === 0 ? 0 : (good / total) * 100} % </p>
+    </>
+  );
+};
+
 const App = () => {
   // save clicks of each button to its own state
   const [good, setGood] = useState(0);
@@ -17,16 +34,7 @@ const App = () => {
       </button>
       <button onClick={() => setBad((bad) => bad + 1)}>Bad</button>
 
-      <h2>Statics</h2>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {total}</p>
-
-      <p>
-        average {total === 0 ? 0 : (good * 1 + neutral * 0 + bad * -1) / total}
-      </p>
-      <p>positive {total === 0 ? 0 : (good / total) * 100} % </p>
+      <Statics good={good} neutral={neutral} bad={bad} total={total} />
     </div>
   );
 };
