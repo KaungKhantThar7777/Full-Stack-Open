@@ -4,16 +4,20 @@ import ReactDOM from "react-dom";
 const Statics = ({ good, neutral, bad, total }) => {
   return (
     <>
-      <h2>Statics</h2>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {total}</p>
+      {total === 0 ? (
+        <p>No Feedback Given</p>
+      ) : (
+        <>
+          <h2>Statics</h2>
+          <p>good {good}</p>
+          <p>neutral {neutral}</p>
+          <p>bad {bad}</p>
+          <p>all {total}</p>
 
-      <p>
-        average {total === 0 ? 0 : (good * 1 + neutral * 0 + bad * -1) / total}
-      </p>
-      <p>positive {total === 0 ? 0 : (good / total) * 100} % </p>
+          <p>average {(good * 1 + neutral * 0 + bad * -1) / total}</p>
+          <p>positive {(good / total) * 100} % </p>
+        </>
+      )}
     </>
   );
 };
