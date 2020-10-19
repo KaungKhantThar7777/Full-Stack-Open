@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
@@ -38,6 +37,12 @@ const App = () => {
     }
   };
 
+  const deleteUser = (id) => {
+    phonebook
+      .remove(id)
+      .then(() => setPersons((persons) => persons.filter((p) => p.id !== id)));
+  };
+
   const personsToShow = filter
     ? persons.filter((person) =>
         person.name.toLowerCase().includes(filter.toLowerCase())
@@ -57,7 +62,7 @@ const App = () => {
         handleSubmit={handleSubmit}
       />
       <h2>Numbers</h2>
-      <Persons persons={personsToShow} />
+      <Persons persons={personsToShow} deleteUser={deleteUser} />
     </div>
   );
 };
