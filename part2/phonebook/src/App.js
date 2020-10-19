@@ -35,12 +35,20 @@ const App = () => {
           `${newName} is already added to the phonebook, replace the old number with a new one?`
         )
       ) {
-        phonebook.update(isAlreadyExist.id, newPerson).then(({ data }) => {
-          setPersons((persons) => persons.map((p) => (p.name === newName ? data : p)));
-          setNotification({ color: "green", message: `Updated ${data.name}` });
-          setNewName("");
-          setNewPhone("");
-        });
+        phonebook
+          .update(isAlreadyExist.id, newPerson)
+          .then(({ data }) => {
+            setPersons((persons) => persons.map((p) => (p.name === newName ? data : p)));
+            setNotification({ color: "green", message: `Updated ${data.name}` });
+            setNewName("");
+            setNewPhone("");
+          })
+          .catch((err) =>
+            setNotification({
+              color: "red",
+              message: `Information of ${newPerson.name} has already been removed from the server`,
+            })
+          );
       }
     } else {
       phonebook.create(newPerson).then(({ data }) => {
