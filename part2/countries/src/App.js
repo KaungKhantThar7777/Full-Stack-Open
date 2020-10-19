@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import CountryDetails from "./components/CountryDetails";
 
 function App() {
   const [countries, setCountries] = React.useState([]);
@@ -19,27 +20,15 @@ function App() {
   if (filteredCountries.length > 10) {
     countriesToShow = "Too many matches, specify another filter";
   } else if (filteredCountries.length === 1) {
-    const { name, capital, population, flag, languages } = filteredCountries[0];
-    countriesToShow = (
-      <div>
-        <h2>{name}</h2>
-        <p>Capital: {capital} </p>
-        <p>Population :{population}</p>
-        <img src={flag} width={100} height={100} alt={name} />
-
-        <h4>Languages</h4>
-        <ul>
-          {languages.map((language) => (
-            <li key={language.name}>{language.name}</li>
-          ))}
-        </ul>
-      </div>
-    );
+    countriesToShow = <CountryDetails country={filteredCountries[0]} />;
   } else {
     countriesToShow = (
       <ul>
         {filteredCountries.map((country) => (
-          <li key={country.name}>{country.name}</li>
+          <li key={country.name}>
+            {country.name}{" "}
+            <button onClick={() => setFilter(country.name)}>Show</button>
+          </li>
         ))}
       </ul>
     );
@@ -51,7 +40,7 @@ function App() {
         find countries{" "}
         <input value={filter} onChange={(e) => setFilter(e.target.value)} />
       </div>
-      {countriesToShow}
+      {filter && countriesToShow}
     </>
   );
 }
