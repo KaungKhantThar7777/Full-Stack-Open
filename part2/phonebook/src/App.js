@@ -25,10 +25,21 @@ const App = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const isAlreadyExist = persons.find((person) => person.name === newName);
+
+    const newPerson = { name: newName, number: newPhone };
     if (isAlreadyExist) {
-      alert(`${newName} is already added to the phonebook`);
+      if (
+        window.confirm(
+          `${newName} is already added to the phonebook, replace the old number with a new one?`
+        )
+      ) {
+        phonebook.update(isAlreadyExist.id, newPerson).then(({ data }) => {
+          setPersons((persons) => persons.map((p) => (p.name === newName ? data : p)));
+          setNewName("");
+          setNewPhone("");
+        });
+      }
     } else {
-      const newPerson = { name: newName, number: newPhone };
       phonebook.create(newPerson).then(({ data }) => {
         setPersons(persons.concat(data));
         setNewName("");
@@ -38,15 +49,11 @@ const App = () => {
   };
 
   const deleteUser = (id) => {
-    phonebook
-      .remove(id)
-      .then(() => setPersons((persons) => persons.filter((p) => p.id !== id)));
+    phonebook.remove(id).then(() => setPersons((persons) => persons.filter((p) => p.id !== id)));
   };
 
   const personsToShow = filter
-    ? persons.filter((person) =>
-        person.name.toLowerCase().includes(filter.toLowerCase())
-      )
+    ? persons.filter((person) => person.name.toLowerCase().includes(filter.toLowerCase()))
     : persons;
 
   return (
