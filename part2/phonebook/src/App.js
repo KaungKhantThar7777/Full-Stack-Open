@@ -51,12 +51,21 @@ const App = () => {
           );
       }
     } else {
-      phonebook.create(newPerson).then(({ data }) => {
-        setPersons(persons.concat(data));
-        setNotification({ color: "green", message: `Added ${data.name}` });
-        setNewName("");
-        setNewPhone("");
-      });
+      phonebook
+        .create(newPerson)
+        .then(({ data }) => {
+          setPersons(persons.concat(data));
+          setNotification({ color: "green", message: `Added ${data.name}` });
+          setNewName("");
+          setNewPhone("");
+        })
+        .catch((err) => {
+          console.dir(err);
+          setNotification({
+            color: "red",
+            message: `${err.response.data.message}`,
+          });
+        });
     }
   };
 
